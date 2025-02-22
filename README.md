@@ -6,7 +6,6 @@ where a, b, c are real numbers and a ≠ 0.
 # How to run project
 
 1. If **.NET 8.0**: is not installed, you can download it from the [official website](https://dotnet.microsoft.com/en-us/download)
-   Check .NET version:
 
 2. Check .NET version:
    ```bash
@@ -18,7 +17,7 @@ where a, b, c are real numbers and a ≠ 0.
    cd QuadraticEquationSolver
 4. Use the command to assemble the project:
    ```bash
-   dotnet build
+   dotnet build EquationSolver.csproj
 5. After a successful build, run the project:
     ```bash
    dotnet run
