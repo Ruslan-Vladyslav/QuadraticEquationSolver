@@ -2,8 +2,6 @@
 using EquationSolver;
 using System;
 using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 
 class Program
 {
@@ -23,11 +21,38 @@ class Program
         } else
         {
             string file = args[0];
-            string[] coefficients = File.ReadAllText(file).Trim().Split(' ');
+            if (Path.GetExtension(file).ToLower() != ".txt")
+            {
+                valid.ErrorColor("Error. File must be a text file (*.txt).");
+                return;
+            }
 
-            a = double.Parse(coefficients[0], CultureInfo.InvariantCulture);
-            b = double.Parse(coefficients[1], CultureInfo.InvariantCulture);
-            c = double.Parse(coefficients[2], CultureInfo.InvariantCulture);
+            if (!File.Exists(file))
+            {
+                valid.ErrorColor($"Error. File '{file}' not found.");
+                return;
+            }
+
+            string[] coeffs = File.ReadAllText(file).Trim().Split(' ');
+            if (coeffs.Length != 3)
+            {
+                valid.ErrorColor("Error. File must contain exactly three numbers.");
+                return;
+            }
+
+            if (!double.TryParse(coeffs[0], NumberStyles.Float, CultureInfo.InvariantCulture, out a) ||
+            !double.TryParse(coeffs[1], NumberStyles.Float, CultureInfo.InvariantCulture, out b) ||
+            !double.TryParse(coeffs[2], NumberStyles.Float, CultureInfo.InvariantCulture, out c))
+            {
+                valid.ErrorColor("Error. File contains invalid numbers.");
+                return;
+            }
+
+            if (a == 0)
+            {
+                valid.ErrorColor("Error. 'a' must not be zero.");
+                return;
+            }
         }
 
         EquationSolver(a, b, c);
