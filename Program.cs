@@ -1,4 +1,5 @@
 ﻿
+using EquationSolver;
 using System;
 using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -9,13 +10,15 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("\nApplication solves a quadratic equation: ax^2 + bx + c = 0\nwhere a, b, c are real numbers and a ≠ 0.\n");
+        
         double a, b, c;
+        var valid = new Validation();
 
         if (args.Length == 0)
         {
-            a = ValidInput("a", true);
-            b = ValidInput("b", false);
-            c = ValidInput("c", false);
+            a = valid.ValidInput("a", true);
+            b = valid.ValidInput("b", false);
+            c = valid.ValidInput("c", false);
 
         } else
         {
@@ -28,37 +31,6 @@ class Program
         }
 
         EquationSolver(a, b, c);
-    }
-    
-    static double ValidInput(string var, bool isFirst)
-    {
-        double val;
-
-        while (true)
-        {
-            Console.Write($"Enter {var}: ");
-
-            string? input = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                Console.WriteLine($"Error. Please enter coefficient '{var}'! ");
-                continue;
-            }
-
-            if (double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out val))
-            {
-                if (val == 0 && isFirst)
-                    Console.WriteLine($"Error. '{var}' must not be zero!");
-                else
-                {
-                    Console.ResetColor();
-                    return val;
-                }
-            }
-            else
-                Console.WriteLine($"Error. Expected a valid real number, got '{input}' instead!");
-        }
     }
 
     static void EquationSolver(double a, double b, double c)
