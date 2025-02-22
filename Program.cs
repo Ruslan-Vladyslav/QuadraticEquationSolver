@@ -77,7 +77,7 @@ class Program
 
             Console.WriteLine($"\nEquation: ({a:0.0}) x^2 + ({b:0.0}) x + ({c:0.0}) = 0");
             Console.WriteLine("There are one root");
-            Console.WriteLine($"x1 = {x:0.0}");
+            Console.WriteLine($"x1 = {Math.Abs(x):0.0}");
         }
         else
             Console.WriteLine("\nThere are 0 roots.");
