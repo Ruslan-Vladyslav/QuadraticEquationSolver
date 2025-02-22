@@ -13,23 +13,9 @@ class Program
 
         if (args.Length == 0)
         {
-            Console.Write("a = ");
-            while (!double.TryParse(Console.ReadLine(), NumberStyles.Float, CultureInfo.InvariantCulture, out a) || a == 0)
-            {
-                Console.Write("Invalid input. Please enter a valid nonzero number for a: ");
-            }
-
-            Console.Write("b = ");
-            while (!double.TryParse(Console.ReadLine(), NumberStyles.Float, CultureInfo.InvariantCulture, out b))
-            {
-                Console.Write("Invalid input. Please enter a valid number for b: ");
-            }
-
-            Console.Write("c = ");
-            while (!double.TryParse(Console.ReadLine(), NumberStyles.Float, CultureInfo.InvariantCulture, out c))
-            {
-                Console.Write("Invalid input. Please enter a valid number for c: ");
-            }
+            a = ValidInput("a", true);
+            b = ValidInput("b", false);
+            c = ValidInput("c", false);
 
         } else
         {
@@ -42,6 +28,37 @@ class Program
         }
 
         EquationSolver(a, b, c);
+    }
+    
+    static double ValidInput(string var, bool isFirst)
+    {
+        double val;
+
+        while (true)
+        {
+            Console.Write($"Enter {var}: ");
+
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine($"Error. Please enter coefficient '{var}'! ");
+                continue;
+            }
+
+            if (double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out val))
+            {
+                if (val == 0 && isFirst)
+                    Console.WriteLine($"Error. '{var}' must not be zero!");
+                else
+                {
+                    Console.ResetColor();
+                    return val;
+                }
+            }
+            else
+                Console.WriteLine($"Error. Expected a valid real number, got '{input}' instead!");
+        }
     }
 
     static void EquationSolver(double a, double b, double c)
