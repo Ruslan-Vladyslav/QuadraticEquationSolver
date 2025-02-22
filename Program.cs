@@ -31,8 +31,17 @@ class Program
                 Console.Write("Invalid input. Please enter a valid number for c: ");
             }
 
-            EquationSolver(a, b, c);
+        } else
+        {
+            string file = args[0];
+            string[] coefficients = File.ReadAllText(file).Trim().Split(' ');
+
+            a = double.Parse(coefficients[0], CultureInfo.InvariantCulture);
+            b = double.Parse(coefficients[1], CultureInfo.InvariantCulture);
+            c = double.Parse(coefficients[2], CultureInfo.InvariantCulture);
         }
+
+        EquationSolver(a, b, c);
     }
 
     static void EquationSolver(double a, double b, double c)
